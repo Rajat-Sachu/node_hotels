@@ -1,17 +1,20 @@
 const mongoose = require('mongoose');
 
-// Get MongoDB connection string from environment variables
 const mongoURL = process.env.MONGO_URL;
+console.log("🔍 MONGO_URL from env:", mongoURL);
 
 if (!mongoURL) {
   console.error("❌ MONGO_URL is undefined. Please check your .env file.");
-  process.exit(1); // Exit the app if MongoDB URL is missing
+  process.exit(1);
 }
 
-// Get default connection
+// ✅ Connect to MongoDB (no need for deprecated options)
+mongoose.connect(mongoURL);
+
+// Connection object
 const db = mongoose.connection;
 
-// Define event listeners for database connection
+// Event listeners
 db.on('connected', () => {
   console.log('✅ Connected to MongoDB server');
 });
@@ -28,5 +31,4 @@ db.on('reconnected', () => {
   console.log('🔄 MongoDB reconnected');
 });
 
-// Export database connection
 module.exports = db;
