@@ -8,6 +8,14 @@ const PORT = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+//Middleware Function
+const logRequest = (req, res, next) => {
+  console.log(`[${new Date().toLocaleDateString()}] Request Made to: ${req.originalUrl}`);
+  next();
+};
+
+app.use(logRequest);
+
 // Route imports
 const personRoutes = require('./routes/personRoutes');
 const menuItemRoutes = require('./routes/menuItemRoutes');
