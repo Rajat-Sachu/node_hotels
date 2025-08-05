@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
-const mongoURL = process.env.MONGO_URL;
+const mongoURL = process.env.MONGO_URL_LOCAL; // Local server
+// const mongoURL = process.env.MONGO_URL; // Live server
 console.log("🔍 MONGO_URL from env:", mongoURL);
 
 if (!mongoURL) {

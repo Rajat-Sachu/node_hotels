@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const passport = require('./auth');
 
 const db = require('./db');
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,9 @@ const logRequest = (req, res, next) => {
 
 app.use(logRequest);
 
+app.use(passport.initialize());
+const localAutMiddleware = passport.authenticate('local',{session:false});
+
 // Route imports
 const personRoutes = require('./routes/personRoutes');
 const menuItemRoutes = require('./routes/menuItemRoutes');
@@ -26,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 // API routes
-app.use('/person', personRoutes);
+app.use('/person', localAutMiddleware, personRoutes);
 app.use('/menu', menuItemRoutes);
 
 // Start server
